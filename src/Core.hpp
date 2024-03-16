@@ -12,5 +12,23 @@
 #include <iostream>
 #include "raylib.h"
 #include "player/Player.hpp"
+#include "player/Definition.hpp"
+
+class Core {
+    public:
+        Core() {
+
+        };
+        ~Core() {
+
+        };
+
+        void update() {
+
+        }
+
+    protected:
+    private:
+};
 
 #endif /* !CORE_HPP_ */

@@ -26,7 +26,7 @@ file(MAKE_DIRECTORY ${BUILD_DIR})
 
 include_directories(${RAYLIB_DIR}/src ${ENTT_DIR})
 
-file(GLOB SOURCES "src/*.cpp" "src/player/*.cpp" "src/player/camera/*.cpp")
+file(GLOB SOURCES "src/*.cpp" "src/player/*.cpp" "src/player/camera/*.cpp" "src/player/controller/*.cpp")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

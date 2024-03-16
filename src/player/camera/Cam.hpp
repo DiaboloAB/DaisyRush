@@ -15,7 +15,6 @@ class Cam {
         Cam(float startX, float startY, float startZ) {
             _camera = {0};
             _camera.position = { startX, startY, startZ };
-            _camera.target = { 0.0f, 0.0f, 0.0f };
             _camera.up = { 0.0f, 1.0f, 0.0f };
             _camera.fovy = 90.0f;
             _camera.projection = CAMERA_PERSPECTIVE;
@@ -25,6 +24,7 @@ class Cam {
         void beginMode3D() { BeginMode3D(_camera); }
         void endMode3D() { EndMode3D(); }
         void setCameraPosition(float x, float y, float z) { _camera.position = {x, y, z}; }
+        void setCameraRotation(float x, float y, float z) { _camera.target = {x, y, z}; }
 
     protected:
     private:

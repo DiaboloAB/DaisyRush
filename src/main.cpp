@@ -11,13 +11,13 @@ int main() {
     Model model = LoadModel("assets/flower.obj");
     Texture2D texture = LoadTexture("assets/flower.png");
     model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
-
+    Core core;
 
     Vector3 position = { 0.0f, 0.0f, 0.0f };
     BoundingBox bounds = GetMeshBoundingBox(model.meshes[0]);
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-
+    SetTargetFPS(60);
+    // HideCursor();
     // Main loop
     entt::registry registry;
 
@@ -27,7 +27,8 @@ int main() {
 
     while (!WindowShouldClose()) {
         // Update
-        player.update();
+        core.update();
+        player.update(core);
         // Draw
         BeginDrawing();
         ClearBackground(RAYWHITE);

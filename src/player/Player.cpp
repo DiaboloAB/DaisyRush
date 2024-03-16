@@ -6,8 +6,9 @@
 */
 
 #include "Player.hpp"
+#include "controller/PlayerController.hpp"
 
-void Player::update() {
+void Player::update(Core &core) {
     auto& position = _registry.get<Position>(_entity);
 
     if (IsKeyDown(KEY_W)) {
@@ -30,4 +31,5 @@ void Player::update() {
     }
     std::cout << "x: " << position.x << " y: " << position.y << std::endl;
     _camera.setCameraPosition(position.x, position.y, position.z);
+    PlayerController::rotate(*this, core, _registry);
 }
