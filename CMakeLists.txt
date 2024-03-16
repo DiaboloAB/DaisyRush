@@ -4,7 +4,6 @@ project(DaisyRush)
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 20)
 
-# Set the path to the Raylib directory within your project
 set(RAYLIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/raylib")
 set(ENTT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/entt")
 
@@ -25,14 +24,12 @@ endif()
 set(BUILD_DIR "${CMAKE_CURRENT_BINARY_DIR}/build")
 file(MAKE_DIRECTORY ${BUILD_DIR})
 
-# Include directories
 include_directories(${RAYLIB_DIR}/src ${ENTT_DIR})
 
-# Add your game's source files
-add_executable(${PROJECT_NAME} src/main.cpp src/player/Player.cpp)
+file(GLOB SOURCES "src/*.cpp" "src/player/*.cpp" "src/player/camera/*.cpp")
 
-# Set the output directory for the executable
+add_executable(${PROJECT_NAME} ${SOURCES})
+
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${BUILD_DIR})
 
-# Link Raylib library
 target_link_libraries(${PROJECT_NAME} raylib)

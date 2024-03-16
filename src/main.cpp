@@ -1,4 +1,4 @@
-#include "raylib.h"
+#include "Core.hpp"
 
 int main() {
     // Initialization
@@ -12,12 +12,6 @@ int main() {
     Texture2D texture = LoadTexture("assets/flower.png");
     model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
 
-    Camera camera = {0};
-    camera.position = { 50.0f, 50.0f, 50.0f };
-    camera.target = { 0.0f, 0.0f, 0.0f };
-    camera.up = { 0.0f, 1.0f, 0.0f };
-    camera.fovy = 90.0f;
-    camera.projection = CAMERA_PERSPECTIVE;
 
     Vector3 position = { 0.0f, 0.0f, 0.0f };
     BoundingBox bounds = GetMeshBoundingBox(model.meshes[0]);
@@ -25,16 +19,22 @@ int main() {
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
     // Main loop
+    entt::registry registry;
+
+    // Create a player object
+    Player player(registry, 50.0f, 50.0f, 50.0f);
+
+
     while (!WindowShouldClose()) {
         // Update
-
+        player.update();
         // Draw
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        BeginMode3D(camera);
+        player.getCamera().beginMode3D();
         // Draw model
         DrawModel(model, position, 100.0f, WHITE);
-        EndMode3D();
+        player.getCamera().endMode3D();
         DrawText("(c) Flower 3D model by Alberto Cano", screenWidth - 200, screenHeight - 20, 10, GRAY);
         EndDrawing();
     }
