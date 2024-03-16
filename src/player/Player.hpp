@@ -29,7 +29,7 @@ class Player {
         }
 
         void update(Core &core);
-        Cam getCamera() { return _camera; }
+        Cam getCamera3D() { return _camera; }
         entt::entity& getEntity() { return _entity; }
     private:
         entt::registry& _registry;

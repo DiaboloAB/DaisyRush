@@ -17,25 +17,23 @@ int main() {
     BoundingBox bounds = GetMeshBoundingBox(model.meshes[0]);
 
     SetTargetFPS(60);
-    // HideCursor();
+    DisableCursor();
     // Main loop
     entt::registry registry;
 
     // Create a player object
     Player player(registry, 50.0f, 50.0f, 50.0f);
-
-
     while (!WindowShouldClose()) {
         // Update
-        core.update();
         player.update(core);
         // Draw
         BeginDrawing();
-        ClearBackground(RAYWHITE);
-        player.getCamera().beginMode3D();
+        ClearBackground(BLUE);
+        player.getCamera3D().beginMode3D();
         // Draw model
+        DrawGrid(1000, 10.0f);
         DrawModel(model, position, 100.0f, WHITE);
-        player.getCamera().endMode3D();
+        player.getCamera3D().endMode3D();
         DrawText("(c) Flower 3D model by Alberto Cano", screenWidth - 200, screenHeight - 20, 10, GRAY);
         EndDrawing();
     }

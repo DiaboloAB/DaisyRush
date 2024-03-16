@@ -23,6 +23,9 @@ cleanCMakeFiles() {
 if [ "$1" = "build" ]; then
     pullSubmodules
     buildDaisyRush
+elif
+    [ "$1" = "clean" ]; then
+    cleanCMakeFiles
 else
     printf "\033[0;31m[ERROR] \033[0mInvalid argument\n"
 fi
