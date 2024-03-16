@@ -9,7 +9,7 @@ pullSubmodules() {
 buildDaisyRush() {
     printf "\033[0;32m[INFO] \033[0mBuilding DaisyRush\n"
     cmake -S . -B build
-    cmake --build build
+    cmake --build build -j
     printf "\033[0;32m[INFO] \033[0mDaisyRush built\n"
 }
 
