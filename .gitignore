@@ -31,4 +31,5 @@
 *.out
 *.app
 
-*/raylib/
+build
+DaisyRush

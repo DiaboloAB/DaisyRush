@@ -8,7 +8,7 @@
 #ifndef CORE_HPP_
 #define CORE_HPP_
 
-#include  "../lib/entt/entt.hpp"
+#include  "../lib/entt/src/entt/entt.hpp"
 #include <iostream>
 #include "raylib.h"
 #include "player/Player.hpp"
