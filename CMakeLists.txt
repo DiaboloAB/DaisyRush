@@ -15,7 +15,9 @@ add_subdirectory(${RAYLIB_DIR})
 include_directories(${RAYLIB_DIR}/src ${ENTT_DIR})
 
 # Source files
-file(GLOB SOURCES "src/*.cpp" "src/player/*.cpp" "src/player/camera/*.cpp" "src/player/controller/*.cpp")
+file(GLOB_RECURSE SOURCES
+    "src/*.cpp"
+)
 
 # Executable
 add_executable(${PROJECT_NAME} ${SOURCES})
