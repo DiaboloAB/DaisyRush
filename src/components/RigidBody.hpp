@@ -34,11 +34,9 @@ struct RigidBodyComponent {
         BoxColliderComponent &collider = _registry.get<BoxColliderComponent>(parentEntity);
         TransformComponent &transform = _registry.get<TransformComponent>(parentEntity);
 
-        std::cout << "velocity: " << _velocity.x << " " << _velocity.y << " " << _velocity.z << std::endl;
 
-        transform._position.y += _velocity.y * GetFrameTime();
+        transform._position.y += _velocity.y * 25 * GetFrameTime();
         if (collider.isColliding(_registry)) {
-            std::cout << "colliding" << std::endl;
             transform._position.y -= _velocity.y * GetFrameTime();
         }
 
@@ -50,26 +48,14 @@ struct RigidBodyComponent {
 
         transform._position.z += _velocity.z * GetFrameTime();
         if (collider.isColliding(_registry)) {
-            std::cout << "colliding" << std::endl;
             transform._position.z -= _velocity.z * GetFrameTime();
         }
         _velocity.y += _gravity * GetFrameTime();
+        if (_velocity.y < -2.81f) {
+            _velocity.y = -2.81f;
+        }
         _velocity.x *= 0.1f * GetFrameTime();
-        // _velocity.z *= 0.1f * GetFrameTime();
-        // if (_velocity.x < 0.05f && _velocity.x > -0.05f) {
-        //     _velocity.x = 0;
-        // }
-        // if (_velocity.z < 0.05f && _velocity.z > -0.05f) {
-        //     _velocity.z = 0;
-        // }
-        // try {
-        //     auto& transform = _registry.get<TransformComponent>(parentEntity);
-        //     transform._position.x += _velocity.x * GetFrameTime();
-        //     transform._position.y += _velocity.y * GetFrameTime();
-        //     transform._position.z += _velocity.z * GetFrameTime();
-        // } catch (const std::exception& e) {
-        //     std::cerr << e.what() << std::endl;
-        // }
+        _velocity.z *= 0.1f * GetFrameTime();
     }
 };
 

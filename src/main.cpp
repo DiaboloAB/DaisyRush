@@ -12,9 +12,9 @@ int main() {
     }
 
 
-    // entt::registry registry;
-    // Core core(registry);
-    // core.run();
+    entt::registry registry;
+    Core core(registry, scoreboard);
+    core.run();
 
     return 0;
 }

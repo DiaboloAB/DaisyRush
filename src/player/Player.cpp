@@ -24,8 +24,10 @@ bool checkGround(entt::registry &registry, entt::entity entity)
 
     if (boxCollider.isColliding(registry)) {
         boxCollider._parentPosition.y += 1;
+
         return true;
     }
+    boxCollider._parentPosition.y += 1;
     return false;
 }
 
@@ -33,18 +35,17 @@ void PlayerComponent::update() {
     auto& rigidBody = _registry.get<RigidBodyComponent>(_entity);
     auto& position = _registry.get<TransformComponent>(_entity)._position;
     Vector3 dir = {0, 0, 0};
-    std::cout << "position: " << position.x << " " << position.y << " " << position.z << std::endl;
-    if (checkGround(_registry, _entity)) {
+    if (checkGround(_registry, _entity) && rigidBody._velocity.y <= 0) {
         _isGrounded = true;
     } else {
         _isGrounded = false;
     }
-    std::cout << "grounded: "<< _isGrounded << std::endl;
     if (_isGrounded) {
         rigidBody._velocity.y = 0;
         auto& rigidBody = _registry.get<RigidBodyComponent>(_entity);
         if (IsKeyDown(KEY_SPACE)) {
-            rigidBody._velocity.y = rigidBody._jumpForce;
+            rigidBody._velocity.y = _jumpForce;
+            _isGrounded = false;
         }
     }
 
@@ -78,30 +79,28 @@ void PlayerComponent::update() {
         }
         _speedMultiplier = 1;
     }
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+        std::cout << "create drop" << std::endl;
+        createDrop();
+    }
     // if (IsKeyDown(KEY_SPACE)) {
     //     position.y += 10 * GetFrameTime();
     // }
     // if (IsKeyDown(KEY_LEFT_SHIFT)) {
     //     position.y -= 10 * GetFrameTime();
     // }
-
     float playerAngle = -_registry.get<TransformComponent>(_entity)._rotation.y * DEG2RAD;
     Vector3 rotatedDir = {0};
     rotatedDir.x = dir.x * cos(playerAngle) + dir.z * sin(playerAngle);
     rotatedDir.z = -dir.x * sin(playerAngle) + dir.z * cos(playerAngle);
 
-    rigidBody._velocity.x = rotatedDir.x * 500 * _speed * _speedMultiplier * GetFrameTime();
-    rigidBody._velocity.z = rotatedDir.z * 500 * _speed * _speedMultiplier * GetFrameTime();
+    rigidBody._velocity.x = rotatedDir.x * 200 * _speed * _speedMultiplier * GetFrameTime();
+    rigidBody._velocity.z = rotatedDir.z * 200 * _speed * _speedMultiplier * GetFrameTime();
 
     rigidBody.update(_registry, _entity);
 
     camera._camera.position = position;
 
-    // if (_registry.get<BoxColliderComponent>(_entity).isColliding(_registry)) {
-    //     std::cout << "COLLIDING" << std::endl;
-    //     position.x -= rotatedDir.x * 10 * GetFrameTime();
-    //     position.z -= rotatedDir.z * 10 * GetFrameTime();
-    // }
 
     PlayerController::rotate(*this, _registry);
     camera.setCamera3DRotation(_registry.get<TransformComponent>(_entity)._rotation);

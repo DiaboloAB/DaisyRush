@@ -37,7 +37,6 @@ class Scoreboard {
             std::vector<std::tuple<std::string, int>> scores;
             for (auto &el : j) {
                 scores.push_back(std::make_tuple(el["name"], el["timestamp"]));
-                std::cout << el["name"] << " " << el["timestamp"] << std::endl;
             }
             setScores(scores);
         }
