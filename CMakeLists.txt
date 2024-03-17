@@ -4,6 +4,13 @@ project(DaisyRush)
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 20)
 
+# Add static runtime for MinGW
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++")
+
+if(WIN32)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --static")
+endif()
+
 # Include raylib
 set(RAYLIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/raylib")
 add_subdirectory(${RAYLIB_DIR})
@@ -88,3 +95,10 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 include(CPack)
+
+# Include all runtimes into the package, like c
+if(MSVC)
+    install(FILES "${CMAKE_INSTALL_PREFIX}/vcruntime140_1.dll"
+        DESTINATION .
+    )
+endif()
