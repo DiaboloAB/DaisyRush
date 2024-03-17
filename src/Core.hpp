@@ -95,7 +95,7 @@ class Core {
                 BeginDrawing();
                 ClearBackground(BLUE);
                 BeginMode3D(_registry.get<CameraComponent>(_player)._camera);
-                DrawModel(_model, {0.0f, 0.0f, 0.0f}, 1.0f, WHITE);
+                DrawModel(_model, {0.0f, 20.0f, 0.0f}, 1.0f, WHITE);
                 _map.draw(_registry);
                 // DrawGrid(1000, 10.0f);
                 if (_debug) {
@@ -133,7 +133,7 @@ class Core {
         Texture2D _can;
         float _canMovement;
 
-        bool _debug = true;
+        bool _debug = false;
         Menu _menu;
         SceneType _scene = SceneType::MENU;
         Map _map;
