@@ -8,6 +8,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(RAYLIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/raylib")
 add_subdirectory(${RAYLIB_DIR})
 
+# Include json
+set(JSON_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/json")
+add_subdirectory(${JSON_DIR})
+
 # Include curlpp
 set(CURLPP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/curlpp")
 

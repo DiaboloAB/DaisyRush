@@ -10,3 +10,7 @@
 	path = lib/curlpp
 	url = https://github.com/jpbarrette/curlpp.git
 	branch = v0.8.1
+[submodule "lib/json"]
+	path = lib/json
+	url = https://github.com/nlohmann/json.git
+	branch = v3.11.3
