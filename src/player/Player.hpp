@@ -8,27 +8,31 @@
 #ifndef PLAYER_HPP_
 #define PLAYER_HPP_
 
-#include "../Core.hpp"
 #include "camera/Cam.hpp"
+#include "../components/Transform.hpp"
+#include "../components/RigidBody.hpp"
+#include "../components/BoxCollider.hpp"
 #include "Definition.hpp"
 
-class Core;
 class Player {
     public:
 
-        Player(entt::registry& registry, float startX, float startY, float startZ)
-            : _registry(registry), _camera(startX, startY, startZ) {
+        Player(entt::registry& registry)
+            : _registry(registry), _camera(0.0f, 0.0f, 0.0f) {
 
             _entity = _registry.create();
-            _registry.emplace<Position>(_entity, startX, startY, startZ);
-            _registry.emplace<Rotation>(_entity, 0.0f, 0.0f, 0.0f);
+            _registry.emplace<TransformComponent>(_entity);
+            _registry.emplace<RigidBodyComponent>(_entity);
+            _registry.emplace<BoxColliderComponent>(_entity);
+            _registry.get<TransformComponent>(_entity)._position = {0, 10, 0};
+
         }
 
         ~Player() {
             _registry.destroy(_entity);
         }
 
-        void update(Core &core);
+        void update();
         Cam getCamera3D() { return _camera; }
         entt::entity& getEntity() { return _entity; }
     private:

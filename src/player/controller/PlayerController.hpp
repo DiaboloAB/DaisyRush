@@ -14,11 +14,11 @@
 
 class PlayerController {
     public:
-        static void rotate(Player &player ,Core &core, entt::registry &registry) {
-            auto& rotation = registry.get<Rotation>(player.getEntity());
-            auto& position = registry.get<Position>(player.getEntity());
-            rotation.x += -GetMouseDelta().y * 0.1f;
-            rotation.y += GetMouseDelta().x * 0.1f;
+        static void rotate(Player &player, entt::registry &registry) {
+            auto& rotation = registry.get<TransformComponent>(player.getEntity())._rotation;
+            auto& position = registry.get<TransformComponent>(player.getEntity())._position;
+            rotation.x += -GetMouseDelta().y * 3.0f * GetFrameTime();
+            rotation.y += GetMouseDelta().x * 3.0f * GetFrameTime();
             if (rotation.x > 89.0f) {
                 rotation.x = 89.0f;
             }

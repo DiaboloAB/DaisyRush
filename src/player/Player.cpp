@@ -5,7 +5,7 @@
 ** Player
 */
 
-#include "Player.hpp"
+#include "../Core.hpp"
 #include "controller/PlayerController.hpp"
 #include <cmath>
 
@@ -17,8 +17,8 @@ Vector3 Vector3RotateY(Vector3 v, float angle)
     return (Vector3){x, y, z};
 }
 
-void Player::update(Core &core) {
-    auto& position = _registry.get<Position>(_entity);
+void Player::update() {
+    auto& position = _registry.get<TransformComponent>(_entity)._position;
     Vector3 dir = {0, 0, 0};
 
     if (IsKeyDown(KEY_W)) {
@@ -34,26 +34,22 @@ void Player::update(Core &core) {
         dir.z += 1;
     }
     if (IsKeyDown(KEY_SPACE)) {
-        position.y += 1;
+        position.y += 10 * GetFrameTime();
     }
     if (IsKeyDown(KEY_LEFT_SHIFT)) {
-        position.y -= 1;
+        position.y -= 10 * GetFrameTime();
     }
 
-    std::cout << "Player Angle: " << _registry.get<Rotation>(_entity).y << std::endl;
-    float playerAngle = -_registry.get<Rotation>(_entity).y * DEG2RAD;
-    std::cout << "Player Angle: " << playerAngle << std::endl;
-    std::cout << "Dir: " << dir.x << " " << dir.y << " " << dir.z << std::endl;
+    float playerAngle = -_registry.get<TransformComponent>(_entity)._rotation.y * DEG2RAD;
     Vector3 rotatedDir = {0};
     rotatedDir.x = dir.x * cos(playerAngle) + dir.z * sin(playerAngle);
     rotatedDir.y = dir.y;
     rotatedDir.z = -dir.x * sin(playerAngle) + dir.z * cos(playerAngle);
-    std::cout << "Rotated Dir: " << rotatedDir.x << " " << rotatedDir.y << " " << rotatedDir.z << std::endl;
-    position.x += rotatedDir.x * 1;
-    position.z += rotatedDir.z * 1;
+    position.x += rotatedDir.x * 10 * GetFrameTime();
+    position.z += rotatedDir.z * 10 * GetFrameTime();
 
-    _camera.setCamera3DPosition(position.x, position.y, position.z);
+    _camera.setCamera3DPosition(position);
 
-    PlayerController::rotate(*this, core, _registry);
-    _camera.setCamera3DRotation(_registry.get<Rotation>(_entity).x, _registry.get<Rotation>(_entity).y, _registry.get<Rotation>(_entity).z);
+    PlayerController::rotate(*this, _registry);
+    _camera.setCamera3DRotation(_registry.get<TransformComponent>(_entity)._rotation);
 }

@@ -8,7 +8,6 @@
 #ifndef CAMERA_HPP_
 #define CAMERA_HPP_
 
-#include "../../Core.hpp"
 #include "rlgl.h"
 
 class Cam {
@@ -30,10 +29,10 @@ class Cam {
         void endMode3D() {
             EndMode3D();
         }
-        void setCamera3DPosition(float x, float y, float z) { _camera.position = {x, y, z};};
-        void setCamera3DRotation(float x, float y, float z) {
-            float yaw = y * 3.14159265359f / 180.0f; // Yaw angle (rotation around the y-axis)
-            float pitch = x * 3.14159265359f / 180.0f; // Pitch angle (rotation around the x-axis)
+        void setCamera3DPosition(Vector3 pos) { _camera.position = pos;};
+        void setCamera3DRotation(Vector3 rot) {
+            float yaw = rot.y * 3.14159265359f / 180.0f; // Yaw angle (rotation around the y-axis)
+            float pitch = rot.x * 3.14159265359f / 180.0f; // Pitch angle (rotation around the x-axis)
 
             Vector3 direction;
             direction.x = std::cos(yaw) * std::cos(pitch); // X component of the direction
