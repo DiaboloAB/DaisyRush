@@ -8,37 +8,30 @@
 #ifndef PLAYER_HPP_
 #define PLAYER_HPP_
 
-#include "camera/Cam.hpp"
+#include "../components/Camera.hpp"
 #include "../components/Transform.hpp"
 #include "../components/RigidBody.hpp"
 #include "../components/BoxCollider.hpp"
-#include "Definition.hpp"
 
-class Player {
-    public:
+struct PlayerComponent {
 
-        Player(entt::registry& registry)
-            : _registry(registry), _camera(0.0f, 0.0f, 0.0f) {
+    PlayerComponent(entt::registry& registry, entt::entity entity)
+        : _registry(registry), _entity(entity) {
+        _speed = 5;
+        _speedMultiplier = 1;
+        _jumpForce = 10;
+    };
 
-            _entity = _registry.create();
-            _registry.emplace<TransformComponent>(_entity);
-            _registry.emplace<RigidBodyComponent>(_entity);
-            _registry.emplace<BoxColliderComponent>(_entity);
-            _registry.get<TransformComponent>(_entity)._position = {0, 10, 0};
+    ~PlayerComponent() {};
 
-        }
+    void update();
 
-        ~Player() {
-            _registry.destroy(_entity);
-        }
-
-        void update();
-        Cam getCamera3D() { return _camera; }
-        entt::entity& getEntity() { return _entity; }
-    private:
-        entt::registry& _registry;
-        entt::entity _entity;
-        Cam _camera;
+    entt::registry& _registry;
+    entt::entity _entity;
+    bool _isGrounded;
+    float _speed;
+    float _speedMultiplier;
+    float _jumpForce;
 };
 
 #endif /* !PLAYER_HPP_ */

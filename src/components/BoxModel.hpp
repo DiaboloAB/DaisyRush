@@ -10,12 +10,12 @@
 
 #include "../Core.hpp"
 
-struct ModelComponent {
+struct BoxModelComponent {
 
-    ModelComponent(const std::string &path, const std::string &texturePath)
+    BoxModelComponent(const std::string &path, const std::string &texturePath)
     {
     }
-    ~ModelComponent();
+    ~BoxModelComponent();
 
     Vector3 _offset;
     Vector3 _size;

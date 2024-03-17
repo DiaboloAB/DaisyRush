@@ -11,13 +11,12 @@
 #include  "../lib/entt/src/entt/entt.hpp"
 #include <iostream>
 #include "raylib.h"
-#include "player/Definition.hpp"
 #include <memory>
 #include "player/Player.hpp"
 #include "Factory.hpp"
 class Core {
     public:
-        Core(entt::registry &registry) : _registry(registry), _player(registry) {
+        Core(entt::registry &registry) : _registry(registry) {
             InitWindow(_screenWidth, _screenHeight, "Draw OBJ Example");
             SetTargetFPS(60);
             DisableCursor();
@@ -25,11 +24,12 @@ class Core {
             _screenWidth = GetScreenWidth();
             _screenHeight = GetScreenHeight();
 
+            _player = _factory.createObject(_registry, "player");
             _model = LoadModel("assets/flower.obj");
             _texture = LoadTexture("assets/flower.png");
             _model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _texture;
             entt::entity ground = _factory.createObject(_registry, "boxCollider");
-            _registry.get<BoxColliderComponent>(ground)._size = {1000, 1, 1000};
+            _registry.get<BoxColliderComponent>(ground)._size = {1000, 10, 1000};
         };
         ~Core() {
             CloseWindow();
@@ -46,16 +46,16 @@ class Core {
 
         void run() {
             while (!WindowShouldClose()) {
-                _player.update();
+                _registry.get<PlayerComponent>(_player).update();
                 BeginDrawing();
                 ClearBackground(BLUE);
-                _player.getCamera3D().beginMode3D();
+                BeginMode3D(_registry.get<CameraComponent>(_player)._camera);
                 DrawModel(_model, {0.0f, 0.0f, 0.0f}, 1.0f, WHITE);
                 if (_debug) {
                     DrawGrid(1000, 10.0f);
                     drawColliders();
                 }
-                _player.getCamera3D().endMode3D();
+                EndMode3D();
                 DrawText("(c) Flower 3D model by Alberto Cano", _screenWidth - 200, _screenHeight - 20, 10, GRAY);
                 EndDrawing();
             }
@@ -63,7 +63,7 @@ class Core {
 
     protected:
     private:
-        Player _player;
+        entt::entity _player;
         int _screenWidth = 800;
         int _screenHeight = 450;
         entt::registry &_registry;
