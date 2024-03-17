@@ -32,7 +32,7 @@ else()
 endif()
 
 # Include directories
-include_directories(${RAYLIB_DIR}/src ${ENTT_DIR})
+include_directories(${RAYLIB_DIR}/src ${ENTT_DIR} ${CURLPP_DIR}/include ${JSON_DIR}/include)
 
 # Source files
 file(GLOB_RECURSE SOURCES
@@ -46,7 +46,7 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 # Link libraries
-target_link_libraries(${PROJECT_NAME} raylib)
+target_link_libraries(${PROJECT_NAME} raylib curlpp)
 
 # Copy assets folder to the bin directory
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
