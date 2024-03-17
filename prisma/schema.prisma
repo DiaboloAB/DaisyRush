@@ -13,5 +13,5 @@ datasource db {
 model Record {
   id        String   @id @default(uuid()) @map("_id")
   name      String
-  timestamp DateTime @default(now())
+  timestamp Int     @map("ts")
 }
