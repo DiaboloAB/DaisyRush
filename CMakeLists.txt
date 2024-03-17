@@ -8,8 +8,24 @@ set(CMAKE_CXX_STANDARD 20)
 set(RAYLIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/raylib")
 add_subdirectory(${RAYLIB_DIR})
 
-# Include ENTT if necessary
-# set(ENTT_DIR "<path_to_ENTT>")
+# Include curlpp
+set(CURLPP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/curlpp")
+
+# Disable warnings for this subdir
+if(MSVC)
+    add_compile_options(/W0)
+else()
+    add_compile_options(-w)
+endif()
+
+add_subdirectory(${CURLPP_DIR})
+
+# Reset warning level for the rest of the project
+if(MSVC)
+    add_compile_options(/W4)
+else()
+    add_compile_options(-Wall -Wextra)
+endif()
 
 # Include directories
 include_directories(${RAYLIB_DIR}/src ${ENTT_DIR})

@@ -6,3 +6,7 @@
 	path = lib/raylib
 	url = https://github.com/raysan5/raylib.git
 	branch = 5.0
+[submodule "lib/curlpp"]
+	path = lib/curlpp
+	url = https://github.com/jpbarrette/curlpp.git
+	branch = v0.8.1
