@@ -36,9 +36,10 @@ struct PlayerComponent {
         _registry.emplace<DropComponent>(entity);
         Vector3 dir = {0, 0, 0};
         float playerAngle = _registry.get<TransformComponent>(_entity)._rotation.y;
-        dir.x = cos(playerAngle * DEG2RAD) * 50;
-        dir.z = sin(playerAngle * DEG2RAD) * 50;
-        _registry.get<TransformComponent>(entity)._position = _registry.get<TransformComponent>(_entity)._position;
+        dir.x = cos(playerAngle * DEG2RAD) * 25;
+        dir.z = sin(playerAngle * DEG2RAD) * 25;
+        Vector3 pos = _registry.get<TransformComponent>(_entity)._position;
+        _registry.get<TransformComponent>(entity)._position = { pos.x, pos.y - 0.5f, pos.z };
         _registry.get<RigidBodyComponent>(entity)._velocity = dir;
         _registry.get<RigidBodyComponent>(entity)._type = RigidBodyType::DYNAMIC;
         _registry.get<BoxColliderComponent>(entity)._isTrigger = true;

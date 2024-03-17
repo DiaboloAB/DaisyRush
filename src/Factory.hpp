@@ -59,6 +59,7 @@ class Factory {
             registry.emplace<TransformComponent>(entity);
             registry.emplace<BoxColliderComponent>(entity, entity,
                 registry.get<TransformComponent>(entity)._position);
+            registry.get<BoxColliderComponent>(entity)._size = {3, 3, 3};
             registry.emplace<PlantComponent>(entity);
             return entity;
         };

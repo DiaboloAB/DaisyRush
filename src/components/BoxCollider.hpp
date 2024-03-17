@@ -20,6 +20,7 @@ struct BoxColliderComponent {
     Vector3 &_parentPosition;
     entt::entity _parentEntity;
     bool _isTrigger = false;
+    std::string _tag = "Untagged";
 
     std::vector<BoxColliderComponent> _collisions;
 

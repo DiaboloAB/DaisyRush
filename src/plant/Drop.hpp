@@ -23,7 +23,9 @@ struct DropComponent {
 
     void draw(entt::registry &registry, entt::entity drop) {
         auto &transform = registry.get<TransformComponent>(drop);
+        auto &rigidBody = registry.get<RigidBodyComponent>(drop);
         DrawCube(transform._position, 1, 1, 1, Fade(BLUE, 0.5f));
+        DrawCubeWires(transform._position, 1, 1, 1, Fade(DARKBLUE, 0.5f));
     }
 
     float _lifeTime;

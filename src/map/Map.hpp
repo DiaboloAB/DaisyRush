@@ -71,6 +71,22 @@ class Map {
             }
         }
 
+        void checkDropCollision(entt::registry &registry, entt::entity entity) {
+            auto &boxCollider = registry.get<BoxColliderComponent>(entity);
+            auto view = registry.view<BoxColliderComponent, PlantComponent>();
+            std::cout << " " << std::endl;
+            for (auto entity2 : view) {
+                std::cout << "CHECK" << std::endl;
+                auto &boxCollider2 = view.get<BoxColliderComponent>(entity2);
+                if (boxCollider.checkCollision(boxCollider2)) {
+                    std::cout << "COLLISION" << std::endl;
+
+                    registry.get<PlantComponent>(entity2)._watered = true;
+
+                }
+            }
+        }
+
         void removeDrop(entt::registry &registry) {
             auto view = registry.view<DropComponent>();
             for (auto entity : view) {
@@ -85,6 +101,9 @@ class Map {
             drawBlock(registry);
             drawPlant(registry);
             updateDrop(registry);
+            auto view = registry.view<DropComponent>();
+            for (auto entity : view)
+                checkDropCollision(registry, entity);
             drawDrop(registry);
             removeDrop(registry);
         }

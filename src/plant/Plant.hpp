@@ -16,10 +16,14 @@ struct PlantComponent {
     ~PlantComponent() {};
 
     void draw() {
-        DrawCylinder(_position, 1, 1, 0.5f, 10, Fade(SKYBLUE, 0.5f));
-        // DrawCylinderWires(_position, 1, 1, 0.5f, 10, Fade(DARKBLUE, 0.5f));
+        if (!_watered)
+            DrawCylinder(_position, 1, 1, 0.5f, 10, Fade(GREEN, 0.5f));
+        else
+            DrawCylinder(_position, 1, 1, 0.5f, 10, Fade(RED, 0.5f));
     }
 
+
+    bool _watered = false;
     Vector3 _position;
 };
 

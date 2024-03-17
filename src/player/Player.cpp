@@ -80,7 +80,6 @@ void PlayerComponent::update() {
         _speedMultiplier = 1;
     }
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-        std::cout << "create drop" << std::endl;
         createDrop();
     }
     // if (IsKeyDown(KEY_SPACE)) {

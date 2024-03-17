@@ -133,7 +133,7 @@ class Core {
         Texture2D _can;
         float _canMovement;
 
-        bool _debug = false;
+        bool _debug = true;
         Menu _menu;
         SceneType _scene = SceneType::MENU;
         Map _map;

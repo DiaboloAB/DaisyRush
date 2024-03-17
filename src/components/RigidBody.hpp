@@ -42,7 +42,6 @@ struct RigidBodyComponent {
 
         transform._position.x += _velocity.x * GetFrameTime();
         if (collider.isColliding(_registry)) {
-            std::cout << "colliding" << std::endl;
             transform._position.x -= _velocity.x * GetFrameTime();
         }
 
@@ -54,8 +53,7 @@ struct RigidBodyComponent {
         if (_velocity.y < -2.81f) {
             _velocity.y = -2.81f;
         }
-        _velocity.x *= 0.1f * GetFrameTime();
-        _velocity.z *= 0.1f * GetFrameTime();
+
     }
 };
 
