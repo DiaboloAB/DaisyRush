@@ -12,27 +12,37 @@ add_subdirectory(${RAYLIB_DIR})
 set(JSON_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/json")
 add_subdirectory(${JSON_DIR})
 
-# Include curlpp
-set(CURLPP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/curlpp")
+if(UNIX)
+    # Include curlpp
+    set(CURLPP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/curlpp")
 
-# Disable warnings for this subdir
-if(MSVC)
-    add_compile_options(/W0)
+    # Disable warnings for this subdir
+    if(MSVC)
+        add_compile_options(/W0)
+    else()
+        add_compile_options(-w)
+    endif()
+
+    add_subdirectory(${CURLPP_DIR})
+
+    # Reset warning level for the rest of the project
+    if(MSVC)
+        add_compile_options(/W4)
+    else()
+        add_compile_options(-Wall -Wextra)
+    endif()
 else()
-    add_compile_options(-w)
-endif()
-
-add_subdirectory(${CURLPP_DIR})
-
-# Reset warning level for the rest of the project
-if(MSVC)
-    add_compile_options(/W4)
-else()
-    add_compile_options(-Wall -Wextra)
+    # Include entt
+    set(ENTT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/entt")
+    include_directories(${ENTT_DIR})
 endif()
 
 # Include directories
-include_directories(${RAYLIB_DIR}/src ${ENTT_DIR} ${CURLPP_DIR}/include ${JSON_DIR}/include)
+if(UNIX)
+    include_directories(${RAYLIB_DIR}/src ${ENTT_DIR} ${CURLPP_DIR}/include ${JSON_DIR}/include)
+else()
+    include_directories(${RAYLIB_DIR}/src ${ENTT_DIR} ${JSON_DIR}/include)
+endif()
 
 # Source files
 file(GLOB_RECURSE SOURCES
@@ -46,7 +56,11 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 # Link libraries
-target_link_libraries(${PROJECT_NAME} raylib curlpp)
+if(UNIX)
+    target_link_libraries(${PROJECT_NAME} raylib curlpp)
+else()
+    target_link_libraries(${PROJECT_NAME} raylib)
+endif()
 
 # Copy assets folder to the bin directory
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
